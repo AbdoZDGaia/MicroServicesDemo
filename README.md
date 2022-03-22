@@ -20,6 +20,7 @@ In order to actually run it:
     - Within the ingress-srv.yaml you should find a `abdoz.org`, feel free to change it or keep it as is
     - Open up hosts within `C:\Windows\System32\drivers\etc`
     - Add the following line `127.0.0.1 abdoz.org` and in case you have changed `abdoz.org` within ingress-srv.yaml, change it here accordingly as well
+    - If you run the command `kubectl get services --namespace=ingress-nginx` you should get a list of the nginx services (load balancer & cluster IP)
   - Run the command `kubectl apply -f local-pvc.yaml`
   - Run the command `kubectl create secret generic mssql --from-literal=SA_PASSWORD="Some password"` bear in mind that "mssql" is the secret's name, and the "SA_PASSWORD" is actually the secret's key
   - Run the command `kubectl apply -f mssql-plat-depl.yaml`
