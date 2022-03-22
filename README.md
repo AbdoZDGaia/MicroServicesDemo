@@ -27,7 +27,7 @@ In order to actually run it:
   - Now give it some time till everything is ready (5 minutes or so)
   - Run the command `kubectl get services` and you should find a `platformservice-srv   NodePort    Some Cluster-IP   Some External-IP    PORT`
   - It should be something similar to this `80:"some port"/TCP` go ahead and copy that port
-  - Open up a new chrome tab and enter `http://localhost:"Port"/swagger"` and now you can actually explore the platforms service's swagger UI
+  - Open up a new chrome tab and enter `http://localhost:"Port"/swagger` and now you can actually explore the platforms service's swagger UI
   - Open up SSMS (SQL Server Management Studio) and connect to `localhost, 1433` and select "SQL Server Authentication" 
   - Enter "sa" as login and enter the password you have picked "Some password" as password
   - Now you are within your created SQL container through the custom load balancer you have created
