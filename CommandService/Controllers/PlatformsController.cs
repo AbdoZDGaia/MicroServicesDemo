@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using CommandService.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CommandService.Controllers
 {
@@ -6,16 +8,16 @@ namespace CommandService.Controllers
     [Route("api/commands/[controller]")]
     public class PlatformsController : ControllerBase
     {
-        public PlatformsController()
-        {
+        private readonly ICommandRepo _repo;
+        private readonly IMapper _mapper;
 
+        public PlatformsController(ICommandRepo repo,
+            IMapper mapper)
+        {
+            _repo = repo;
+            _mapper = mapper;
         }
 
-        [HttpPost]
-        public IActionResult TestInboundConnection()
-        {
-            Console.WriteLine("--> Inbound POST # Command Service");
-            return Ok("Inbound test of from Platforms Controller");
-        }
+
     }
 }
