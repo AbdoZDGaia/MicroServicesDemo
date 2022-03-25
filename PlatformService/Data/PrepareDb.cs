@@ -1,4 +1,5 @@
-﻿using PlatformService.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PlatformService.Models;
 
 namespace PlatformService.Data
 {
@@ -9,12 +10,25 @@ namespace PlatformService.Data
             using (var serviceScope = app.Services.CreateScope())
             {
                 var ctx = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
-                SeedData(ctx);
+                SeedData(ctx, app.Environment.IsProduction());
             }
         }
 
-        private static void SeedData(AppDbContext context)
+        private static void SeedData(AppDbContext context, bool isProd)
         {
+            if (isProd)
+            {
+                Console.WriteLine("--> Attempting to apply migrations");
+                try
+                {
+                    context.Database.Migrate();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"--> Unable to apply migrations: {ex.Message}");
+                }
+            }
+
             if (!context.Platforms.Any())
             {
                 Console.WriteLine("--> Seeding data...");
