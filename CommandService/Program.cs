@@ -5,22 +5,22 @@ var builder = WebApplication.CreateBuilder(args);
 
 var config = builder.Configuration;
 
-//if (builder.Environment.IsProduction())
-//{
+if (builder.Environment.IsProduction())
+{
     Console.WriteLine("--> Using SQL Server Db");
     builder.Services.AddDbContext<AppDbContext>(options =>
     {
         options.UseSqlServer(config.GetConnectionString("CommandsConnection"));
     });
-//}
-//else
-//{
-//    Console.WriteLine("--> Using In Memory Db");
-//    builder.Services.AddDbContext<AppDbContext>(opt =>
-//    {
-//        opt.UseInMemoryDatabase("Db");
-//    });
-//}
+}
+else
+{
+    Console.WriteLine("--> Using In Memory Db");
+    builder.Services.AddDbContext<AppDbContext>(opt =>
+    {
+        opt.UseInMemoryDatabase("Db");
+    });
+}
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
