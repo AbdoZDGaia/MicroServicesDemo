@@ -1,13 +1,32 @@
+using CommandService.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var config = builder.Configuration;
+
+//if (builder.Environment.IsProduction())
+//{
+    Console.WriteLine("--> Using SQL Server Db");
+    builder.Services.AddDbContext<AppDbContext>(options =>
+    {
+        options.UseSqlServer(config.GetConnectionString("CommandsConnection"));
+    });
+//}
+//else
+//{
+//    Console.WriteLine("--> Using In Memory Db");
+//    builder.Services.AddDbContext<AppDbContext>(opt =>
+//    {
+//        opt.UseInMemoryDatabase("Db");
+//    });
+//}
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+builder.Services.AddScoped<ICommandRepo, CommandRepo>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,5 +41,7 @@ app.UseSwaggerUI();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.Populate();
 
 app.Run();
