@@ -24,10 +24,13 @@ In order to actually run it:
   - Run the command `kubectl apply -f local-pvc.yaml`
   - Run the command `kubectl create secret generic mssql --from-literal=SA_PASSWORD="Some password"` bear in mind that "mssql" is the secret's name, and the "SA_PASSWORD" is actually the secret's key
   - Run the command `kubectl apply -f mssql-plat-depl.yaml`
+  - Run the command `kubectl apply -f rabbitmq-depl.yaml`
   - Now give it some time till everything is ready (5 minutes or so)
   - Run the command `kubectl get services` and you should find a `platformservice-srv   NodePort    Some Cluster-IP   Some External-IP    PORT`
   - It should be something similar to this `80:"some port"/TCP` go ahead and copy that port
   - Open up a new chrome tab and enter `http://localhost:"Port"/swagger` and now you can actually explore the platforms service's swagger UI
+  - Open up a new chrome tab and enter `http://localhost:15672` and now you can access your RabbitMQ management console
+    - You can use "guest" as both user and password to access the admin console, these are the default ones anyways
   - Open up SSMS (SQL Server Management Studio) and connect to `localhost, 1433` and select "SQL Server Authentication" 
   - Enter "sa" as login and enter the password you have picked "Some password" as password
   - Now you are within your created SQL container through the custom load balancer you have created
